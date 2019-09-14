@@ -4,15 +4,15 @@
 #include <utility>
 
 template<class T>
-class Node
+class QueueNode
 {
     public:
-        Node()
+        QueueNode()
         :next(nullptr),prev(nullptr) {}
 
         T val;
-        Node<T> *next;
-        Node<T> *prev;
+        QueueNode<T> *next;
+        QueueNode<T> *prev;
 };
 
 template<class T>
@@ -24,7 +24,7 @@ class Queue
 
         ~Queue() { this->clear(); }
         
-        const size_t size() { return this->m_size; }
+        size_t size() { return this->m_size; }
 
         bool empty() { return (this->m_back == nullptr); }
 
@@ -44,7 +44,7 @@ class Queue
 
         void push(T val)
         {
-            Node<T> *newHead { new Node<T> };
+            QueueNode<T> *newHead { new QueueNode<T> };
             newHead->val = val;
             newHead->next = this->m_back;
             newHead->prev = nullptr;
@@ -98,8 +98,8 @@ class Queue
         }
 
     private:
-        Node<T> *m_back;
-        Node<T> *m_front;
+        QueueNode<T> *m_back;
+        QueueNode<T> *m_front;
         size_t m_size;
 };
 
