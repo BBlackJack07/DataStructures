@@ -18,71 +18,93 @@ class Queue
 {
     public:
         Queue()
-        :head(nullptr) {}
+        :m_back(nullptr), m_size(0) {}
 
         ~Queue() { this->clear(); }
+        
+        const size_t size() { return this->m_size; }
 
+        bool empty() { return (this->m_back == nullptr); }
+
+        void swap(Queue<T> &other)
+        {
+            auto back  = this->m_back;
+            auto front = this->m_front;
+            auto size  = this->size();
+            this->m_back  = other.m_back;
+            this->m_front = other.m_front;
+            this->m_size  = other.size();
+            other.m_back  = back;
+            other.m_front = front;
+            other.m_size  = size;
+        }
+        
         void clear()
         {
-            while(head != nullptr)
-                this->pop_back();
+            while(m_back != nullptr)
+                this->pop();
         }
+
 
         void push(T val)
         {
             Node<T> *newHead { new Node<T> };
             newHead->val = val;
-            newHead->next = this->head;
+            newHead->next = this->m_back;
             newHead->prev = nullptr;
-            if (head == nullptr)
+            if (this->m_back == nullptr)
             {
-               this->head = newHead;
-               this->end = this->head;
+               this->m_back = newHead;
+               this->m_front = this->m_back;
             }
             else
             {
-               this->head->prev = newHead;
-               this->head = newHead;
+               this->m_back->prev = newHead;
+               this->m_back = newHead;
             }
+            this->m_size++;
         }
         
-        T pop_back()
+        T pop()
         {
-            if (this->head == nullptr)
+            if (this->m_back == nullptr)
             {
                 T ret {};
                 return ret;
             }
             
-            if (this->head == this->end)
+            T ret { this->m_front->val };
+            if (this->m_back == this->m_front)
             {
-               T ret = this->head->val;
-               delete this->head;
-               this->head = nullptr;
-               this->end = nullptr;
-               return ret;
+               delete this->m_front;
+               this->m_back = nullptr;
+               this->m_front = nullptr;
+            }
+            else
+            {
+                this->m_front = this->m_front->prev;
+                delete this->m_front->next;
+                m_front->next = nullptr;
             }
             
-            T ret { this->end->val };
-            this->end = end->prev;
-            delete end->next;
-            end->next = nullptr;
+            this->m_size--;
             return ret;
         }
 
-        const Node<T>* top()
+        const T back()
         {
-            return this->head;
+            return this->m_back->val;
         }
         
-        const Node<T>* bot()
+        const T front()
         {
-           return this->end;
+           return this->m_front->val;
         }
 
     private:
-        Node<T> *head;
-        Node<T> *end;
+        Node<T> *m_back;
+        Node<T> *m_front;
+        size_t m_size;
 };
 
 #endif
