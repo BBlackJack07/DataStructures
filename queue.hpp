@@ -1,6 +1,8 @@
 #ifndef QUEUE_HPP
 #define QUEUE_HPP
 
+#include <utility>
+
 template<class T>
 class Node
 {
@@ -28,15 +30,9 @@ class Queue
 
         void swap(Queue<T> &other)
         {
-            auto back  = this->m_back;
-            auto front = this->m_front;
-            auto size  = this->size();
-            this->m_back  = other.m_back;
-            this->m_front = other.m_front;
-            this->m_size  = other.size();
-            other.m_back  = back;
-            other.m_front = front;
-            other.m_size  = size;
+            std::swap(this->m_back, other.m_back);
+            std::swap(this->m_front, other.m_front);
+            std::swap(this->m_size, other.m_size);
         }
         
         void clear()
