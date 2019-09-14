@@ -60,7 +60,7 @@ class Stack
             T ret { this->m_top->val };
             delete m_top;
             m_top = newHead;
-            this->m_size++;
+            this->m_size--;
             return ret;
         }
 
