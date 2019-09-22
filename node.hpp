@@ -10,18 +10,6 @@ class SimpleNode
         SimpleNode()
         :next(nullptr) {}
         
-        SimpleNode(const _Self &_x)
-        {
-            *this = _x;
-        }
-
-        _Self& operator=(const _Self &_x)
-        {
-            this->data = _x.data;
-            this->next = _x.next;
-            return *this;
-        }
-
         SimpleNode(T value)
         :data(value),next(nullptr) {}
         
@@ -40,19 +28,6 @@ class DoublyLinkedNode
         DoublyLinkedNode()
         :prev(nullptr),next(nullptr) {}
 
-        DoublyLinkedNode(const _Self &_x)
-        {
-            *this = _x;
-        }
-
-        _Self& operator=(const _Self &_x)
-        {
-            this->prev = _x.prev;
-            this->data = _x.data;
-            this->next = _x.next;
-            return *this;
-        }
-        
         DoublyLinkedNode(T value)
         :prev(nullptr),data(value),next(nullptr) {}
         
