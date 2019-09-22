@@ -2,18 +2,10 @@
 #define QUEUE_HPP
 
 #include <utility>
+#include "node.hpp"
 
 template<class T>
-class QueueNode
-{
-    public:
-        QueueNode()
-        :next(nullptr),prev(nullptr) {}
-
-        T val;
-        QueueNode<T> *next;
-        QueueNode<T> *prev;
-};
+using QueueNode = DoublyLinkedNode<T>;
 
 template<class T>
 class Queue
@@ -44,19 +36,16 @@ class Queue
 
         void push(T val)
         {
-            QueueNode<T> *newHead { new QueueNode<T> };
-            newHead->val = val;
-            newHead->next = this->m_back;
-            newHead->prev = nullptr;
+            QueueNode<T> *newBack { new QueueNode<T>(val, this->m_back) };
             if (this->m_back == nullptr)
             {
-               this->m_back = newHead;
+               this->m_back = newBack;
                this->m_front = this->m_back;
             }
             else
             {
-               this->m_back->prev = newHead;
-               this->m_back = newHead;
+               this->m_back->prev = newBack;
+               this->m_back = newBack;
             }
             this->m_size++;
         }

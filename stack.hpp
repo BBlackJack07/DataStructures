@@ -2,17 +2,10 @@
 #define STACK_HPP
 
 #include <utility>
+#include "node.hpp"
 
 template<class T>
-class StackNode
-{
-    public:
-        StackNode()
-        :next(nullptr) {}
-
-        T val;
-        StackNode<T> *next;
-};
+using StackNode = SimpleNode<T>;
 
 template<class T>
 class Stack
@@ -41,9 +34,7 @@ class Stack
 
         void push(T val)
         {
-            StackNode<T> *newHead { new StackNode<T> };
-            newHead->val = val;
-            newHead->next = this->m_top;
+            StackNode<T> *newHead { new StackNode<T>(val, this->m_top) };
             this->m_top = newHead;
             this->m_size++;
         }
