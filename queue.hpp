@@ -50,40 +50,38 @@ class Queue
             this->m_size++;
         }
         
-        T pop()
+        void pop()
         {
-            if (this->m_back == nullptr)
+            if (this->m_back != nullptr)
             {
-                T ret {};
-                return ret;
-            }
             
-            T ret { this->m_front->data };
-            if (this->m_back == this->m_front)
-            {
-               delete this->m_front;
-               this->m_back = nullptr;
-               this->m_front = nullptr;
-            }
-            else
-            {
-                this->m_front = this->m_front->prev;
-                delete this->m_front->next;
-                m_front->next = nullptr;
-            }
+                if (this->m_back == this->m_front)
+                {
+                    delete this->m_front;
+                    this->m_back = nullptr;
+                    this->m_front = nullptr;
+                }
+                else
+                {
+                    this->m_front = this->m_front->prev;
+                    delete this->m_front->next;
+                    m_front->next = nullptr;
+                }
             
-            this->m_size--;
-            return ret;
+                this->m_size--;
+            }
         }
 
-        const T back()
+        T back()
         {
-            return this->m_back->data;
+            if (this->m_back != nullptr) return this->m_back->data;
+            return T();
         }
         
-        const T front()
+        T front()
         {
-           return this->m_front->data;
+           if (this->m_back != nullptr) return this->m_front->data;
+           return T();
         }
 
     private:

@@ -37,25 +37,21 @@ class Stack
             this->m_size++;
         }
 
-        T pop()
+        void pop()
         {
-            if (this->m_top == nullptr)
+            if (this->m_top != nullptr)
             {
-                T ret {};
-                return ret;
+                _Node *newHead { this->m_top->next };
+                delete m_top;
+                m_top = newHead;
+                this->m_size--;
             }
-
-            _Node *newHead { this->m_top->next };
-            T ret { this->m_top->data };
-            delete m_top;
-            m_top = newHead;
-            this->m_size--;
-            return ret;
         }
 
-        const T top()
+        T top()
         {
-            return this->m_top->data;
+            if (this->m_top != nullptr) return this->m_top->data;
+            return T();
         }
 
     private:
