@@ -23,7 +23,7 @@ class List
         List(const List<T>& other)
         :m_size(0),m_back(nullptr),m_front(nullptr) { *this = other; }
 
-        List<T> operator=(const List<T>& other) 
+        List<T>& operator=(const List<T>& other) 
         {
             this->clear();
             _Node *current = other.m_back;
