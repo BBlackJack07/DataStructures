@@ -4,43 +4,68 @@
 template<class T>
 class SimpleNode
 {
+    
+    typedef SimpleNode<T> _Self;
     public:
         SimpleNode()
         :next(nullptr) {}
+        
+        SimpleNode(const _Self &_x)
+        {
+            *this = _x;
+        }
+
+        _Self& operator=(const _Self &_x)
+        {
+            this->data = _x.data;
+            this->next = _x.next;
+            return *this;
+        }
 
         SimpleNode(T value)
-        :val(value),next(nullptr) {}
+        :data(value),next(nullptr) {}
         
-        SimpleNode(T value, SimpleNode<T> * n)
-        :val(value),next(n) {}
+        SimpleNode(T value, _Self * n)
+        :data(value),next(n) {}
         
-        T val;
-        SimpleNode<T> * next;
+        T data;
+        _Self * next;
 };
 
 template<class T>
 class DoublyLinkedNode
 {
+    typedef DoublyLinkedNode<T> _Self;
     public:
         DoublyLinkedNode()
         :prev(nullptr),next(nullptr) {}
+
+        DoublyLinkedNode(const _Self &_x)
+        {
+            *this = _x;
+        }
+
+        _Self& operator=(const _Self &_x)
+        {
+            this->prev = _x.prev;
+            this->data = _x.data;
+            this->next = _x.next;
+            return *this;
+        }
         
         DoublyLinkedNode(T value)
-        :prev(nullptr),val(value),next(nullptr) {}
+        :prev(nullptr),data(value),next(nullptr) {}
         
-        DoublyLinkedNode(DoublyLinkedNode<T> * p, T value)
-        :prev(p),val(value),next(nullptr) {}
+        DoublyLinkedNode(_Self * p, T value)
+        :prev(p),data(value),next(nullptr) {}
         
-        DoublyLinkedNode(T value, DoublyLinkedNode<T> * n)
-        :prev(nullptr),val(value),next(n) {}
+        DoublyLinkedNode(T value, _Self * n)
+        :prev(nullptr),data(value),next(n) {}
 
 
-
-
-
-        DoublyLinkedNode<T> * prev;
-        T val;
-        DoublyLinkedNode<T> * next;
+        _Self * prev;
+        T data;
+        _Self * next;
 };
 
 #endif

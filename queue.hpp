@@ -4,17 +4,17 @@
 #include <utility>
 #include "node.hpp"
 
-template<class T>
-using QueueNode = DoublyLinkedNode<T>;
 
 template<class T>
 class Queue
 {
+    typedef DoublyLinkedNode<T> _Node;
     public:
         Queue()
-        :m_back(nullptr), m_size(0) {}
+        :m_size(0),m_back(nullptr),m_front(nullptr) {}
 
         ~Queue() { this->clear(); }
+
         
         size_t size() { return this->m_size; }
 
@@ -34,9 +34,9 @@ class Queue
         }
 
 
-        void push(T val)
+        void push(T data)
         {
-            QueueNode<T> *newBack { new QueueNode<T>(val, this->m_back) };
+            _Node *newBack { new _Node(data, this->m_back) };
             if (this->m_back == nullptr)
             {
                this->m_back = newBack;
@@ -58,7 +58,7 @@ class Queue
                 return ret;
             }
             
-            T ret { this->m_front->val };
+            T ret { this->m_front->data };
             if (this->m_back == this->m_front)
             {
                delete this->m_front;
@@ -78,18 +78,18 @@ class Queue
 
         const T back()
         {
-            return this->m_back->val;
+            return this->m_back->data;
         }
         
         const T front()
         {
-           return this->m_front->val;
+           return this->m_front->data;
         }
 
     private:
-        QueueNode<T> *m_back;
-        QueueNode<T> *m_front;
         size_t m_size;
+        _Node *m_back;
+        _Node *m_front;
 };
 
 #endif

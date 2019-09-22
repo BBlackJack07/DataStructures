@@ -5,11 +5,9 @@
 #include "node.hpp"
 
 template<class T>
-using StackNode = SimpleNode<T>;
-
-template<class T>
 class Stack
 {
+    typedef SimpleNode<T> _Node;
     public:
         Stack()
         :m_top(nullptr),m_size(0) {}
@@ -32,9 +30,9 @@ class Stack
                 this->pop();
         }
 
-        void push(T val)
+        void push(T data)
         {
-            StackNode<T> *newHead { new StackNode<T>(val, this->m_top) };
+            _Node *newHead { new _Node(data, this->m_top) };
             this->m_top = newHead;
             this->m_size++;
         }
@@ -47,8 +45,8 @@ class Stack
                 return ret;
             }
 
-            StackNode<T> *newHead { this->m_top->next };
-            T ret { this->m_top->val };
+            _Node *newHead { this->m_top->next };
+            T ret { this->m_top->data };
             delete m_top;
             m_top = newHead;
             this->m_size--;
@@ -57,11 +55,11 @@ class Stack
 
         const T top()
         {
-            return this->m_top->val;
+            return this->m_top->data;
         }
 
     private:
-        StackNode<T> *m_top;
+        _Node *m_top;
         size_t m_size;
 };
 
